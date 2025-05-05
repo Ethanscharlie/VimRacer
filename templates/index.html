@@ -1,15 +1,39 @@
 <!doctype html>
 <html>
   <body>
-    <form>
-      <h3>Input</h3>
-      <p>Example body, of text</p>
+    <h3>Input</h3>
+    <p id="input-p">nul</p>
 
-      <h3>Output</h3>
-      <p>Example, of text body!</p>
+    <h3>Output</h3>
+    <p id="output-p">nul</p>
 
+    <form id="stroke-form">
       <h3>Vim keystrokes</h3>
-      <input type="text" name="keystrokes" value="" />
+      <input type="text" id="keystrokes" value="" />
+      <input type="submit" />
     </form>
+
+    <script>
+      let strokeFormElement = document.getElementById("stroke-form");
+      let keystrokesElement = document.getElementById("keystrokes");
+      let inputPElement = document.getElementById("input-p");
+      let outputPElement = document.getElementById("output-p");
+
+      function getInputOutput() {
+        const res = fetch("/get-level")
+          .then((response) => response.json())
+          .then((data) => {
+            inputPElement.innerText = data.in;
+            outputPElement.innerText = data.out;
+          })
+          .catch((error) => console.log("Unable to fetch data:", error));
+      }
+
+      strokeFormElement.addEventListener("submit", (e) => {
+        e.preventDefault();
+      });
+
+      getInputOutput();
+    </script>
   </body>
 </html>
