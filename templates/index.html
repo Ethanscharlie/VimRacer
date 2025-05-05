@@ -20,7 +20,7 @@
       let outputPElement = document.getElementById("output-p");
 
       function getInputOutput() {
-        const res = fetch("/get-level")
+        const res = fetch(`/get-level`)
           .then((response) => response.json())
           .then((data) => {
             inputPElement.innerText = data.in;
@@ -31,6 +31,10 @@
 
       strokeFormElement.addEventListener("submit", (e) => {
         e.preventDefault();
+        const res = fetch(`/check-strokes?strokes=${keystrokesElement.value}`)
+          .then((response) => response)
+          .then((data) => {})
+          .catch((error) => console.log("Unable to fetch data:", error));
       });
 
       getInputOutput();
